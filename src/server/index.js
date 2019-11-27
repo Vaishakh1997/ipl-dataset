@@ -1,25 +1,21 @@
+const matchList=require('./matches.json');
+const deliveriesList=require('./deliveries.json');
 
-const list1=require('./matches.json');
-const list2=require('./deliveries.json');
 
+// 1. Number of matches played per runCounter for result the years in IPL.
 
-// 1. Number of matches played per year for all the years in IPL.
-
-var object1={};
-var count=0;
-list1.forEach(function(element)
-{
-    list1.forEach(function(team)
-    {
-        if(element.season==team.season)
-        {
-            count++;
-        }
-    });
-    object1[element.season]=count;
-    count=0;
-});
-console.log(object1);
+// function noOfMatchesPlayedPerYear(matchList)
+// {
+//     const noOfMatches=matchList.reduce((iplYear,runCounter) =>{ 
+//         if(iplYear.hasOwnProperty(runCounter.season) === true)
+//             iplYear[runCounter.season]+=1;
+//         else
+//             iplYear[runCounter.season]=1; 
+//         return iplYear;
+//     } , {})
+// return noOfMatches;
+// }
+// console.log(noOfMatchesPlayedPerYear(matchList));
 
 
 
@@ -30,29 +26,20 @@ console.log(object1);
 
 // 2.Number of matches won of per allTeam per year in IPL.
 
-var result={};
-function noOfMatchesWonPerAllTeamPerYear(list1,result)
-{
-    let noOfMatchesWon=0;
-    list1.forEach(function(teamName){
-        result[teamName.winner]= {};
-        list1.forEach(function(oneTeam){
-            list1.forEach(function(allTeam){
-                if(allTeam.winner===teamName.winner && allTeam.season===oneTeam.season )
-                {
-                    noOfMatchesWon++;
-                }
-            }); 
-        //if(noOfMatchesWon>0)
-        result[teamName.winner][oneTeam.season]=noOfMatchesWon;
-        noOfMatchesWon=0;
-    });
-});
-delete result[''];
-}
-
-
-
+// var object=matchList.reduce((iplTeam,runCounter) =>{ 
+//     if(iplTeam.hasOwnProperty(runCounter.winner) === true)
+//     {
+//         if(iplTeam[runCounter.winner].hasOwnProperty(runCounter.season)===true)
+//             iplTeam[runCounter.winner][runCounter.season]+=1;
+//         else
+//             iplTeam[runCounter.winner][runCounter.season]=1;
+//     }
+//     else
+//         iplTeam[runCounter.winner]={};
+//     return iplTeam;
+// },{});
+// delete object[''];
+// console.log(object)
 
 
 
@@ -61,24 +48,30 @@ delete result[''];
 
 // 3. Extra runs conceded per allTeam in 2016
 
-var object4={};
-var count=0;
-const match2016=list2.filter(id => id.match_id>=577 && id.match_id<=636)
-match2016.forEach(function(element){
-    match2016.forEach(function(team)
-        {
-            if(team.bowling_team===element.bowling_team)
-            {
-                
-               count=Number(team.extra_runs)+count;
-               
-            }
-        });  
-    object4[element.bowling_team]=count;
-    count=0;
-});
-console.log(object4);
+// var id2016=matchList.filter(id=> id.season == 2016).map(a=>a.id);
+// var max= getMaxOfArray(id2016)
+// function getMaxOfArray(id2016) {
+//     return Math.max.apply(null, id2016);
+//   }
 
+// var min= getMinOfArray(id2016)
+// function getMinOfArray(id2016) {
+//     return Math.min.apply(null, id2016);
+//   }
+
+// function extraRunsConceeded(deliveriesList,max,min)
+// {
+//     const match2016=deliveriesList.filter(id => id.match_id>=min && id.match_id<=max)
+//     var extraRunPerTeam= match2016.reduce((iplTeam,runCounter) =>{ 
+//     if(iplTeam.hasOwnProperty(runCounter.bowling_team) === true)
+//     iplTeam[runCounter.bowling_team]+=Number(runCounter.extra_runs);
+//     else
+//     iplTeam[runCounter.bowling_team]=1; 
+//     return iplTeam;
+//     } , {});
+//     return extraRunPerTeam;
+// }
+// console.log(extraRunsConceeded(deliveriesList,max,min));
 
 
 
@@ -89,41 +82,55 @@ console.log(object4);
 
 
 //4. Top 10 economical bowlers in 2015
-let ball=0;
-let total_runs=0;
-const object5={};
-const match2015=list2.filter(id => id.match_id>=518 && id.match_id<=576)
-   match2015.forEach(function(bowlers){
-        match2015.forEach(function(team){
-            if(bowlers.bowler===team.bowler)
-            {
-                ball++;
-                total_runs+=Number(team.wide_runs) + Number(team.batsman_runs) + Number(team.noball_runs);
-                if(team.wide_runs !=0 || team.noball_runs!=0)
-                {
-                    ball--;
-                }
-            }
-        });
-     
-        if(ball>=24)
-        {
-            let over=ball/6;
-            let economy=total_runs/over;
-            object5[bowlers.bowler]=economy;
-        }
-        ball=0;
-        total_runs=0;
-});
-let array=Object.entries(object5)
-array = array.sort(Comparator);
 
-function Comparator(a, b) {
-    if (a[1] < b[1]) return -1;
-    else return 1;
-  }
- 
-array=array.slice(0,10);
-console.log(array)
+// var id2015=matchList.filter(id=> id.season == 2015).map(a=>a.id);
+// var max= getMaxOfArray(id2015)
+// function getMaxOfArray(id2015) {
+//     return Math.max.apply(null, id2015);
+//   }
+
+// var min= getMinOfArray(id2015)
+// function getMinOfArray(id2015) {
+//     return Math.min.apply(null, id2015);
+//   }
+
+
+//     const matchPlayedIn2015=deliveriesList.filter(id => id.match_id>=min && id.match_id<=max)
+//     var bowlerObject=matchPlayedIn2015.reduce((iplBowler,runCounter) =>{ 
+//         if(iplBowler.hasOwnProperty(runCounter.bowler) === true)
+//         {
+//             iplBowler[runCounter.bowler]['ball']+=1;
+//             iplBowler[runCounter.bowler]['runs']+=(Number(runCounter.wide_runs) + Number(runCounter.batsman_runs) + Number(runCounter.noball_runs));
+//             if(runCounter.wide_runs != 0 && runCounter.noball_runs != 0)
+//             iplBowler[runCounter.bowler]['ball']-=1;
+//         }
+//         else
+//         {
+//             iplBowler[runCounter.bowler]=[]
+//             iplBowler[runCounter.bowler]['ball']=1;
+//             iplBowler[runCounter.bowler]['runs']=(Number(runCounter.wide_runs) + Number(runCounter.batsman_runs) + Number(runCounter.noball_runs));
+
+//         }
+//     return iplBowler;
+//     },[]);
+   
+// let arrayOfBowler=Object.entries(bowlerObject).reduce((objectOfEconomy,economyCounter)=>
+//     {
+//     if(economyCounter[1]['ball']>24)
+//     {
+//         let economy=economyCounter[1]['runs']/(economyCounter[1]['ball']/6);
+//         objectOfEconomy[economyCounter[0]]=economy;
+//     }
+//     return objectOfEconomy;
+//     },[]);
+    
+// arrayOfBowler=Object.entries(arrayOfBowler).sort(Comparator).slice(0,10);
+// function Comparator(a, b) 
+// {
+//     if (a[1] < b[1]) return -1;
+//     else return 1;
+// }
+// console.log(arrayOfBowler);
+
 
 

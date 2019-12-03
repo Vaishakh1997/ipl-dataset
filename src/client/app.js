@@ -1,11 +1,17 @@
 // Create the chart
-function match1()
+
+matchesPerSeason()
+extraRunsConceeded()
+top10EconomicalBowlers()
+matchesWonPerYear()
+
+function matchesPerSeason()
 {
     fetch('../output/matchesPerSeason.json')
     .then(response => response.json())
     .then(data => 
     
-    Highcharts.chart('container1', {
+    Highcharts.chart('matchesPerSeason', {
     
     chart: {
         type: 'column'
@@ -45,7 +51,7 @@ function match1()
 
     series: [
         {
-            colorByPoint: true,
+            colorByPoint: false,
             data :Object.entries(data)
         }
     ]  
@@ -59,12 +65,12 @@ function match1()
 
 
 // Create the chart
-function match2()
+function extraRunsConceeded()
 {
     fetch('../output/extraRunsConceeded.json')
     .then(response => response.json())
     .then(data => 
-    Highcharts.chart('container2', {
+    Highcharts.chart('extraRunsConceeded', {
     
     chart: {
         type: 'column'
@@ -118,12 +124,12 @@ function match2()
 
 
 // Create the chart
-function match3()
+function top10EconomicalBowlers()
 {
     fetch('../output/top10EconomicalBowlers.json')
     .then(response => response.json())
     .then(data => 
-    Highcharts.chart('container3', {
+    Highcharts.chart('top10EconomicalBowlers', {
     
     chart: {
         type: 'bar'
@@ -163,7 +169,7 @@ function match3()
 
     series: [
         {
-            colorByPoint: true,
+            
             data : data ,
         }
     ]  
@@ -177,21 +183,22 @@ function match3()
 
 
 
-function match4()
+function matchesWonPerYear()
 {
     fetch('../output/MatchesWonPerYear.json')
     .then(response => response.json())
     .then(data => 
 {
     data=Object.entries(data)
-    const year= data.map(ele=>Object.keys(ele[1]))
+    const years= data.map(year=>Object.keys(year[1]))
    
-    data=data.map((d) =>(
+    data=data.map((team) =>(
         {
-            name:d[0],
-            data:Object.values(d[1]),
+            name:team[0],
+            data:Object.values(team[1]),
+            
         }));
-        Highcharts.chart('container4', {
+        Highcharts.chart('matchesWonPerYear', {
             chart: {
                 type: 'column'
             },
@@ -199,7 +206,7 @@ function match4()
                 text: 'Number of Matches Won per Team per Year'
             },
             xAxis: {
-                categories: year[0],
+                categories: years[0],
                 title: {
                     text: 'Year'
                 }

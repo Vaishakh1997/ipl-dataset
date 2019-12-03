@@ -19,29 +19,38 @@ function noOfMatchesPlayedPerYear(matches)
 
 function noOfMatchesWonPerYear(matchList)
 { 
-    const years = matchList.map(element => element.season);
-    const year = new Set(years);
-    var matchWonPerYear=matchList.reduce((matches,match) =>{ 
-        if(matches.hasOwnProperty(match.winner))
-        {
-            if(matches[match.winner].hasOwnProperty(match.season))
-                matches[match.winner][match.season]+=1;
-            else 
-                matches[match.winner][match.season]=1;
-        }
-        else 
-            matches[match.winner]={};    
-        return matches;
+    var years=matchList.reduce((years,year)=>
+    {
+        if(years.hasOwnProperty(year.season)===false)
+            years[year.season]=1;
+        return years;
     },{});
-    Object.values(matchWonPerYear).forEach((element) => {
-        year.forEach((item) => {
-          if (!element[item]) {
-            element[item] = 0;
-          }
-        });
-      });
+    years=Object.keys(years);
 
-    delete matchWonPerYear[''];
+    var matchWonPerYear=matchList.reduce((matches,match)=>
+    {
+        years.map(year=>{
+        if(matches.hasOwnProperty(match.winner))
+        {   
+            if(matches[match.winner].hasOwnProperty(year)===false)
+                matches[match.winner][year]=0;
+            if(year===match.season)
+            {
+                if(matches[match.winner].hasOwnProperty(match.season))
+                    matches[match.winner][match.season]+=1;
+                else matches[match.winner][match.season]=1;
+            }
+        }
+        else
+        {
+            matches[match.winner]={};
+            if(matches[match.winner].hasOwnProperty(year)===false)
+                matches[match.winner][year]=0;
+        }   
+    })
+        return matches;
+    },{})
+    delete matchWonPerYear['']
     return matchWonPerYear;  
 }
 

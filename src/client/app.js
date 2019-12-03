@@ -184,14 +184,13 @@ function match4()
     .then(data => 
 {
     data=Object.entries(data)
-    console.log(data)
+    const year= data.map(ele=>Object.keys(ele[1]))
+   
     data=data.map((d) =>(
         {
             name:d[0],
             data:Object.values(d[1]),
         }));
-        
-        console.log(data)
         Highcharts.chart('container4', {
             chart: {
                 type: 'column'
@@ -200,7 +199,7 @@ function match4()
                 text: 'Number of Matches Won per Team per Year'
             },
             xAxis: {
-                categories: Object.keys(Object.keys(data)),
+                categories: year[0],
                 title: {
                     text: 'Year'
                 }

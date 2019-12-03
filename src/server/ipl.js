@@ -19,6 +19,8 @@ function noOfMatchesPlayedPerYear(matches)
 
 function noOfMatchesWonPerYear(matchList)
 { 
+    const years = matchList.map(element => element.season);
+    const year = new Set(years);
     var matchWonPerYear=matchList.reduce((matches,match) =>{ 
         if(matches.hasOwnProperty(match.winner))
         {
@@ -31,6 +33,14 @@ function noOfMatchesWonPerYear(matchList)
             matches[match.winner]={};    
         return matches;
     },{});
+    Object.values(matchWonPerYear).forEach((element) => {
+        year.forEach((item) => {
+          if (!element[item]) {
+            element[item] = 0;
+          }
+        });
+      });
+
     delete matchWonPerYear[''];
     return matchWonPerYear;  
 }
